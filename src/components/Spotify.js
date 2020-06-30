@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React from 'react'
 
 const Spotify = ({spotid}) => {
 	return (
@@ -9,7 +9,6 @@ const Spotify = ({spotid}) => {
 			frameBorder="0"
 			allowtransparency="true"
 			allow="encrypted-media" />
-			{console.log(spotid)}
 		</div>
 	 );
 }
