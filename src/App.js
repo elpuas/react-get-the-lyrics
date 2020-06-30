@@ -14,7 +14,10 @@ function App() {
 	const [lyric, saveTheLyric] = useState('');
 
 	// Spotify ID start as an empty array
-	const [spotid, saveSpotId] = useState('');
+	const [spotid, saveSpotId] = useState('3lMVtX2zN22nm30jGVoOpT');
+
+	// Audio DB starts with empty array
+	const [genre, setGenre] = useState('Metal');
 
 	useEffect(() => {
 		// Return early and often.
@@ -22,7 +25,6 @@ function App() {
 
 		// Create a Async/Await function to fetch API
 		const searchApiLyric = async () => {
-			// const id = '2dQd2qrFB5VtuUMp45G41p'
 			const { artist, song } = searchLyric;
 			const url = `https://api.lyrics.ovh/v1/${artist}/${song}`;
 			const url2 = `https://www.theaudiodb.com/api/v1/json/1/search.php?s=${artist}`;
@@ -37,19 +39,11 @@ function App() {
 				},
 			};
 
-			const [lyric, info, track] = await Promise.all([
-				axios(url),
-				axios(url2),
-				axios(url3),
-				// axios(url3)
-			]);
-
-			console.log('INFO', info.data.artists[0].strStyle);
-			console.log('LETRA', lyric.data.lyrics);
-			console.log('SPOTIFY ID', track.data.tracks.items[0].id);
+			const [lyric, info, track] = await Promise.all([axios(url), axios(url2), axios(url3)]);
 
 			saveTheLyric(lyric.data.lyrics);
 			saveSpotId(track.data.tracks.items[0].id);
+			setGenre(info.data.artists[0].strStyle);
 		};
 		// Invoke the function
 		searchApiLyric();
@@ -59,11 +53,14 @@ function App() {
 		<Fragment>
 			<Form saveLyric={saveLyric} />
 			<div>
-				<div>
-					<Spotify spotid={spotid} />
-
-					<Song lyric={lyric} />
-				</div>
+				{'Metal' === genre ? (
+					<div>
+						<Spotify spotid={spotid} />
+						<Song lyric={lyric} />
+					</div>
+				) : (
+					'This is not a Metal Song'
+				)}
 			</div>
 		</Fragment>
 	);
