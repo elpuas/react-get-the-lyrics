@@ -8,7 +8,9 @@ const Spotify = ({spotid}) => {
 			height="380"
 			frameBorder="0"
 			allowtransparency="true"
-			allow="encrypted-media" />
+			allow="encrypted-media"
+			title="Spotify Player"
+			/>
 		</div>
 	 );
 }
